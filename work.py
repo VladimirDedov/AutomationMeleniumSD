@@ -6,6 +6,7 @@ from selenium.webdriver.common.by import By
 from utils import Data
 
 class Work:
+    @staticmethod
     def completion(url, browser, request, gos_org, person, email):
         # pass url
         browser.get(url=url)
@@ -46,6 +47,7 @@ class Work:
         Work.pressbutton(browser)
         time.sleep(2)
 
+    @staticmethod
     def transverSIS(browser):
         time.sleep(2)
         # find frame
@@ -61,6 +63,7 @@ class Work:
         Select(selector).select_by_value("165")
         time.sleep(2)
 
+    @staticmethod
     def autorization(url, browser):
         browser.get(url=url)
         # search AND input login
@@ -76,16 +79,19 @@ class Work:
         input_p.send_keys(Keys.ENTER)
         time.sleep(1)
 
+    @staticmethod
     def presslink(browser, text):
         accept = browser.find_element(By.LINK_TEXT, text)
         accept.click()
 
+    @staticmethod
     def pressbutton(browser):
         time.sleep(1)
         accept = browser.find_element(By.XPATH, "//button[@type='submit']")
         accept.click()
         time.sleep(2)
 
+    @staticmethod
     def threepage(browser):
         selector = browser.find_element(By.ID, "att_1")
         Select(selector).select_by_visible_text("Сопровождение клиентских мест пользователей (Консультация, обучение, установка ПО)")
@@ -93,11 +99,13 @@ class Work:
         Select(selector).select_by_value("1282")
         time.sleep(2)
 
+    @staticmethod
     def addperson(browser):
         selector = browser.find_element(By.ID, "att_2")
         Select(selector).select_by_visible_text(Data.person_name)
         time.sleep(2)
 
+    @staticmethod
     def provided(browser):
         input_m = browser.find_element(By.ID, "att_0")
         input_m.clear()

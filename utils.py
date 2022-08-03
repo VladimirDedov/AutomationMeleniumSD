@@ -1,6 +1,8 @@
 import openpyxl, datetime, random
 
+
 class Data:
+    @staticmethod
     def __readTXT(name_file):
         file = open(name_file, "r", encoding="utf-8")
         line1 = file.readline().strip()
@@ -11,8 +13,9 @@ class Data:
             exit()
         return line1, line2
 
-    #read xls file
-    def __readXLS(data_name):
+    # read xls file
+    @staticmethod
+    def readXLS(data_name):
         list_request, list_go, list_person, list_email = [], [], [], []
         book = openpyxl.open(data_name, read_only=True)
         sheet = book.worksheets[0]  # first list in book
@@ -25,48 +28,67 @@ class Data:
         return list_request, list_go, list_person, list_email
 
     # return one record from array
-    def returnData(request=False, gos_org=False):
+    @classmethod
+    def returnData(cls,request=False, gos_org=False):
         list_go_person_mail = []
 
         if request:
-            ran = random.randint(1, len(Data.__list_data[1]))
-            return Data.__list_data[0][ran]
+            ran = random.randint(1, len(cls.__list_data[1]))
+            return cls.__list_data[0][ran]
         elif gos_org:
-            ran = random.randint(1, len(Data.__list_data[1]))
+            ran = random.randint(1, len(cls.__list_data[1]))
             for i in range(1, 4):
-                list_go_person_mail.append(Data.__list_data[i][ran])
+                list_go_person_mail.append(cls.__list_data[i][ran])
             return list_go_person_mail
-    #overwrite the number of requests
+
+    # overwrite the number of requests
+    @staticmethod
     def __write_fileTXT(text_lines):
-        file = open("sd.txt", "w", encoding="utf-8")
-        for text in text_lines:
-            file.write(text + "\n")
-        file.close()
+        with open("sd.txt", "w", encoding="utf-8") as file:
+            for text in text_lines:
+                file.write(text + "\n")
+
+
     # Add to end file month and number of requests
+    @staticmethod
     def __write_to_end_fileTXT(month, count):
-        file = open("sd.txt", "a", encoding="utf-8")
-        file.write(month + "\n")
-        file.write(count + "\n")
-        file.close()
-    #Filling in the file SD
-    def to_change_txt_sd(count):
+        with open("sd.txt", "a", encoding="utf-8") as file:
+            file.write(month + "\n")
+            file.write(count + "\n")
+
+
+    # Filling in the file SD
+    @classmethod
+    def to_change_txt_sd(cls,count):
         text_lines = []
         date = datetime.date.today()
-        file = open("sd.txt", "r", encoding="utf-8")
-        for t in file.readlines():
-            text_lines.append(t.rstrip())
+        with open("sd.txt", "r", encoding="utf-8") as file:
+            for t in file.readlines():
+                text_lines.append(t.rstrip())
 
-        if Data.number_of_mouth[date.month] == text_lines[-2]:
+        if cls.number_of_mouth[date.month] == text_lines[-2]:
             count = int(text_lines[-1]) + count
             text_lines[-1] = str(count)
-            Data.__write_fileTXT(text_lines)
+            cls.__write_fileTXT(text_lines)
         else:
-            Data.__write_to_end_fileTXT(Data.number_of_mouth[date.month], str(count))
+            cls.__write_to_end_fileTXT(cls.number_of_mouth[date.month], str(count))
         file.close()
-    #Data set
-    __list_data= __readXLS('data.xlsx')
-    inf_sistem, person_name = __readTXT("informsystem.txt")
-    login, password = __readTXT("login.txt")
+
+    # Data set
+    try:
+        __list_data = readXLS('data.xlsx')
+    except:
+        print("Не удалось прочитать файл data.xlsx")
+    try:
+        inf_sistem, person_name = __readTXT("informsystem.txt")
+    except:
+        print("Не удалось прочитать файл informsystem.txt")
+    try:
+        login, password = __readTXT("login.txt")
+    except:
+        print("Не удалось прочитать файл login.txt")
+
+
     path = "C:\Pyton\SD\cromedriver\chromedriver.exe"
     url = [
         "https://sd.nitec.kz/pages/UI.php",
@@ -86,7 +108,3 @@ class Data:
         11: "Ноябрь",
         12: "Декабрь"
     }
-
-
-
-
