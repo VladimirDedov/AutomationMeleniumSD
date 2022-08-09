@@ -29,7 +29,7 @@ class Data:
 
     # return one record from array
     @classmethod
-    def returnData(cls,request=False, gos_org=False):
+    def return_data(cls, request=False, gos_org=False):
         list_go_person_mail = []
 
         if request:
@@ -48,7 +48,6 @@ class Data:
             for text in text_lines:
                 file.write(text + "\n")
 
-
     # Add to end file month and number of requests
     @staticmethod
     def __write_to_end_fileTXT(month, count):
@@ -56,10 +55,9 @@ class Data:
             file.write(month + "\n")
             file.write(count + "\n")
 
-
     # Filling in the file SD
     @classmethod
-    def to_change_txt_sd(cls,count):
+    def to_change_txt_sd(cls, count):
         text_lines = []
         date = datetime.date.today()
         with open("sd.txt", "r", encoding="utf-8") as file:
@@ -88,8 +86,8 @@ class Data:
     except:
         print("Не удалось прочитать файл login.txt")
 
-
-    path = "C:\Pyton\SD\cromedriver\chromedriver.exe"
+    XPATH = '/html/body/div[1]/div[2]/main/div[2]/div[2]/div[2]/div/div/'
+    PATH = "C:\Pyton\SD\cromedriver\chromedriver.exe"
     url = [
         "https://sd.nitec.kz/pages/UI.php",
         "https://sd.nitec.kz/pages/UI.php?operation=new&class=UserRequest&c%5Borg_id%5D=1&c%5Bmenu%5D=NewUserRequest"
