@@ -12,10 +12,10 @@ class Work:
         browser.get(url=url)
         time.sleep(2)
 
-        # search and input inform sistem
+        # search and input inform system
         inf_sistem = browser.find_element(By.ID, "label_2_application_solution")
         inf_sistem.clear()
-        inf_sistem.send_keys((Data.inf_sistem))
+        inf_sistem.send_keys((Data.inf_system))
         time.sleep(4)
         inf_sistem.send_keys(Keys.ENTER)
         time.sleep(2)

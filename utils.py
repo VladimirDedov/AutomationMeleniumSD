@@ -78,7 +78,7 @@ class Data:
     except:
         print("Не удалось прочитать файл data.xlsx")
     try:
-        inf_sistem, person_name = __readTXT("informsystem.txt")
+        inf_system, person_name = __readTXT("informsystem.txt")
     except:
         print("Не удалось прочитать файл informsystem.txt")
     try:
